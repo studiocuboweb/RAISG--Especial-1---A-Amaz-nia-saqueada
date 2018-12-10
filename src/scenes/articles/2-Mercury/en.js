@@ -175,7 +175,7 @@ export default () => (
             zoomMin: 5,
             zoomMax: 10
           }
-        }}>Yanomami territory, which extends between Brazil and Venezuela</StoryMedia> A <FileLink
+        }}>Yanomami territory, which extends between Brazil and Venezuela</StoryMedia>. A <FileLink
         href={require("documents/chapter2/diagnostico_contaminacao_mercurio_terra_indigena_yanomami.pdf")}
         format="pdf"
         size="1.4MB">study by the Instituto Socioambiental (ISA) in partnership with the Oswaldo Cruz Foundation (Fiocruz)</FileLink> collected 239 hair samples in nine villages in November 2014. Priority was given to categories most at risk of contamination: women of reproductive age and adults with some history of direct contact with gold mining activities. The study also collected 35 samples of fish that constitute a fundamental part of the community diet. The study was conducted in the Papiú and Waikás regions, where Yanomami and Ye'kwana ethnic groups live.
