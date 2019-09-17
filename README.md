@@ -22,7 +22,7 @@ docker run -v "$PWD":/usr/src/app -w /usr/src/app node:8 yarn remove webpack<br/
 docker run -v "$PWD":/usr/src/app -w /usr/src/app node:8 yarn remove webpack-cli<br/>
 
 - FAZENDO O BUILD
-docker-comose build
+docker-compose build
 
 
 # LIGANDO O DOCKER
