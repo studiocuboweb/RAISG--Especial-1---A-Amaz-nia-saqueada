@@ -10,6 +10,7 @@ import YouTube from "react-youtube";
 import "styles/fullbg_video.css";
 
 import SiteTitle from "components/SiteTitle";
+import LanguageSelect from "components/LanguageSelect";
 
 import { Link } from "react-router-dom";
 
@@ -252,6 +253,14 @@ const Middle = styled.div`
     width: 210px;
     text-transform: uppercase;
   }
+  .language-padding {
+    margin-bottom:2.5rem
+  }
+  @media screen and ( max-height: 1000px ) {
+    .language-padding {
+      margin-bottom:4.5rem
+    }
+  }
 `;
 
 class Scene extends Component {
@@ -312,6 +321,9 @@ class Scene extends Component {
               defaultMessage="New survey reveals the existence of more than 2000 points and 200 illegal mining areas in six Amazonian countries."
             />
           </p>
+          <div class='language-padding'>
+            <LanguageSelect />
+          </div>
           {this.isLaunchDate() ? (
             <span className="countdown">
               <span className="count">
