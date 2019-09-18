@@ -86,34 +86,14 @@ const WrapperHome = styled.section`
 
 const WrapperStory = styled.section`
 
-  ${media.phone`
+  @media only screen and (max-width: 567px){
     position: absolute;
     bottom:10px;
-    z-index: 99999;
-  `}
-  
-  ${media.phablet`
-    position: absolute;
-    bottom:10px;
-    z-index: 99999;
-  `}
-
-  ${media.tablet`
-    position: absolute;
-    bottom:10px;
-    z-index: 99999;
-  `}
-
-  ${media.desktop`
+  }
+  @media only screen and (min-width: 568px){
     position: relative;
     bottom:0;
-  `}
-
-  ${media.desktopHD`
-    position: relative;
-    bottom:0;
-  `}
-
+  }
   .custom-select {
     /* The container must be positioned relative: */
     position: relative;
@@ -157,7 +137,7 @@ const WrapperStory = styled.section`
   /* Style items (options): */
   .select-items {
     font-family: "Cinzel";
-    font-size: 0.5em;
+    font-size: 0.5rem;
     letter-spacing: 0.1rem;
     display: inline-block;
     color: #999;

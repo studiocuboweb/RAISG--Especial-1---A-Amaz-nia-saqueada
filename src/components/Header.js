@@ -14,6 +14,7 @@ const Wrapper = styled.header`
   padding: .5rem 1rem;
   background: #f3f3f3;
   z-index: 999999;
+
   .title {
     blo:right;
     font-size: 2rem;
@@ -178,7 +179,8 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLandscape: true
+      isLandscape: true,
+      windowWidth: window.innerWidth
     };
   }
   componentDidMount() {
@@ -199,7 +201,18 @@ class Header extends Component {
           scope.setState({isLandscape:true})
         }
     });
+
+    window.addEventListener("resize", this.checkResize.bind(this));
   }
+
+  checkResize() {
+    this.setState({windowWidth:window.innerWidth})
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.checkResize.bind(this));
+  }
+
   render () {
     const { lastPath,aboutPath, sharePath,dataPath } = this.props;
     const url = process.env.SITE_URL || "";
@@ -239,10 +252,10 @@ class Header extends Component {
             <NavLink to={sharePath} title="Compartilhe" style={{'marginRight':'20px'}}>
               <span className="fa fa-share-alt"></span>
             </NavLink>
-           }
-            {(isBrowser || (isMobile && this.state.isLandscape)) && 
-              <LanguageSelect />
-            }
+          }
+          {(this.state.windowWidth > 567) && 
+            <LanguageSelect />
+          }
           {/* {
             dataPath &&
             <NavLink to={dataPath} title="Dados">

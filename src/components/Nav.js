@@ -7,6 +7,7 @@ import { media } from 'styles/utils';
 import { Collapse } from 'react-collapse';
 import {BrowserView,MobileView,isBrowser,isMobile,isTablet} from "react-device-detect";
 import LanguageSelect from "components/LanguageSelect";
+import { windowCount } from 'rxjs/operators';
 
 const Wrapper = styled.nav`
   font-family: "Cinzel", serif;
@@ -18,6 +19,7 @@ const Wrapper = styled.nav`
   position: relative;
   z-index: 10;
   flex: 0 0 auto;
+
   ol {
     margin: 0;
     padding: 0;
@@ -179,7 +181,8 @@ class ArticleNav extends Component {
     this.checkResize = this.checkResize.bind(this);
     this.state = {
       collapsed: false,
-      isLandscape: true
+      isLandscape: true,
+      windowWidth: window.innerWidth
     };
   }
 
@@ -229,6 +232,8 @@ class ArticleNav extends Component {
         collapsed: true
       });
     }
+
+    this.setState({windowWidth:window.innerWidth})
   }
 
   toggleNavbar() {
@@ -297,7 +302,7 @@ class ArticleNav extends Component {
               <ProgressBar path="/story/conflicts" />
             </NavLink>
           </li>
-          {(isMobile && !this.state.isLandscape) && 
+          {(this.state.windowWidth <= 567) && 
             <li>
               <LanguageSelect />
             </li>
