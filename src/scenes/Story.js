@@ -7,6 +7,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Redirect, Route, Link, Switch } from "react-router-dom";
 
 import { FormattedMessage } from "react-intl";
+import { CookiesProvider } from 'react-cookie';
 
 import Container from "components/blocks/Container";
 import Paragraph from "components/blocks/Paragraph";
@@ -48,10 +49,45 @@ class Scene extends Component {
     this.onStoryEntered = this.onStoryEntered.bind(this);
     this.unexpand = this.unexpand.bind(this);
     this.state = {
-      isShowing: true
+      isShowing: false
     }
   }
+
+  getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  checkCookie() {
+    var cookiepopup = this.getCookie("infoamazoniapopup");
+    if (cookiepopup == "") {
+      this.setState({isShowing: true})
+      this.setCookie();
+    } else {
+      this.setState({isShowing: false})
+    }
+  }
+
+  setCookie() {
+      var d = new Date();
+      d.setTime(d.getTime() + (30*24*60*60*1000));
+      var expires = "expires="+ d.toUTCString();
+      document.cookie = "infoamazoniapopup=true;" + expires;
+  }
+
   componentDidMount() {
+    this.checkCookie();
     this.removeSwipeListeners = swipe(findDOMNode(this), direction => {
       this.nextArticle(direction);
     });
@@ -133,7 +169,21 @@ class Scene extends Component {
           className="popup"
           show={this.state.isShowing}
           close={this.closePopupHandler}>
-            Os dados sobre mineração ilegal contidos nesta reportagem representam o momento da publicação. Para ver dados atualizados por favor visite mineria.amazoniasocioambiental.org
+            <FormattedMessage
+              defaultMessage="The data on illegal mining contained in this report represents the time of publication. To view updated data please visit mineria.amazoniasocioambiental.org"
+              id="popup.text"
+              values={{
+                a: msg => (
+                  <a class="external_link" target="_blank" href="https://mineria.amazoniasocioambiental.org/">
+                    {msg}
+                  </a>
+                ),
+              }}
+            />
+            {/* <FormattedMessage
+            id="popup.text"
+            defaultMessage="Os dados sobre mineração ilegal contidos nesta reportagem representam o momento da publicação. Para ver dados atualizados por favor visite mineria.amazoniasocioambiental.org EN"
+            /> */}
         </Popup>        
         <Helmet>
           <meta property="og:type" content="article" />

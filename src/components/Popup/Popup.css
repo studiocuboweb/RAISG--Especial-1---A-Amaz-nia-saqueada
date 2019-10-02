@@ -9,6 +9,7 @@
     width: 60%;
     position: absolute;
     z-index: 9999999999;
+    font-size: 1rem;
 }
 
 .modal-header {
@@ -24,6 +25,7 @@
     text-align: center;
     margin: 0;
     padding: 0;
+    align-items: center;
 }
 
 .modal-body {
@@ -38,7 +40,7 @@
 }
 
 .close-modal-btn {
-    color: white;
+    color: black;
     cursor: pointer;
     float: right;
     font-size: 30px;
