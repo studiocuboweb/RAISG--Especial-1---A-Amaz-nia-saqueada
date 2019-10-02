@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { media, color } from 'styles/utils';
 import { NavLink, Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import LanguageSelect from "components/LanguageSelect";
+import {BrowserView,MobileView,isBrowser,isMobile} from "react-device-detect";
 
 import SiteTitle from './SiteTitle';
 
@@ -12,6 +14,7 @@ const Wrapper = styled.header`
   padding: .5rem 1rem;
   background: #f3f3f3;
   z-index: 999999;
+
   .title {
     blo:right;
     font-size: 2rem;
@@ -173,6 +176,43 @@ const Wrapper = styled.header`
 `
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLandscape: true,
+      windowWidth: window.innerWidth
+    };
+  }
+  componentDidMount() {
+    var mql = window.matchMedia("(orientation: portrait)");
+    // If there are matches, we're in portrait
+    if(mql.matches) {  
+      // Portrait orientation
+      this.setState({isLandscape:false})
+    }
+    
+    // Add a media query change listener
+    var scope = this
+    mql.addListener(function(m) {
+        if(m.matches) {
+          scope.setState({isLandscape:false})
+        }
+        else {
+          scope.setState({isLandscape:true})
+        }
+    });
+
+    window.addEventListener("resize", this.checkResize.bind(this));
+  }
+
+  checkResize() {
+    this.setState({windowWidth:window.innerWidth})
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.checkResize.bind(this));
+  }
+
   render () {
     const { lastPath,aboutPath, sharePath,dataPath } = this.props;
     const url = process.env.SITE_URL || "";
@@ -209,10 +249,13 @@ class Header extends Component {
           }
           {
             sharePath &&
-            <NavLink to={sharePath} title="Compartilhe">
+            <NavLink to={sharePath} title="Compartilhe" style={{'marginRight':'20px'}}>
               <span className="fa fa-share-alt"></span>
             </NavLink>
-           }
+          }
+          {(this.state.windowWidth > 567) && 
+            <LanguageSelect />
+          }
           {/* {
             dataPath &&
             <NavLink to={dataPath} title="Dados">

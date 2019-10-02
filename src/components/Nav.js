@@ -5,6 +5,9 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { media } from 'styles/utils';
 import { Collapse } from 'react-collapse';
+import {BrowserView,MobileView,isBrowser,isMobile,isTablet} from "react-device-detect";
+import LanguageSelect from "components/LanguageSelect";
+import { windowCount } from 'rxjs/operators';
 
 const Wrapper = styled.nav`
   font-family: "Cinzel", serif;
@@ -16,6 +19,7 @@ const Wrapper = styled.nav`
   position: relative;
   z-index: 10;
   flex: 0 0 auto;
+
   ol {
     margin: 0;
     padding: 0;
@@ -176,7 +180,9 @@ class ArticleNav extends Component {
     this.closeNavbar = this.closeNavbar.bind(this);
     this.checkResize = this.checkResize.bind(this);
     this.state = {
-      collapsed: false
+      collapsed: false,
+      isLandscape: true,
+      windowWidth: window.innerWidth
     };
   }
 
@@ -189,6 +195,27 @@ class ArticleNav extends Component {
         collapsed: true
       });
     }
+
+    var mql = window.matchMedia("(orientation: portrait)");
+    // If there are matches, we're in portrait
+    var isLandscape = true;
+    if(mql.matches) {  
+      // Portrait orientation
+      isLandscape = false;
+      this.setState({isLandscape:false})
+      console.log('portrait')
+    }
+    
+    // Add a media query change listener
+    var scope = this
+    mql.addListener(function(m) {
+        if(m.matches) {
+          scope.setState({isLandscape:false})
+        }
+        else {
+          scope.setState({isLandscape:true})
+        }
+    });
     window.addEventListener("resize", this.checkResize.bind(this));
   }
 
@@ -205,6 +232,8 @@ class ArticleNav extends Component {
         collapsed: true
       });
     }
+
+    this.setState({windowWidth:window.innerWidth})
   }
 
   toggleNavbar() {
@@ -228,7 +257,9 @@ class ArticleNav extends Component {
   render () {
     return (
       <Wrapper>
-      <span className='menu-icon-wrapper'><i className="fa fa-bars menu-toggle" onClick={() => this.toggleNavbar()}></i></span>
+        <div style={{'position':'fixed'}}>
+            <span className='menu-icon-wrapper'><i className="fa fa-bars menu-toggle" onClick={() => this.toggleNavbar()}></i></span>
+       </div>
       <Collapse isOpened={this.state.collapsed}>
         <ol>
           <li onClick={() => this.closeNavbar()}>
@@ -271,6 +302,11 @@ class ArticleNav extends Component {
               <ProgressBar path="/story/conflicts" />
             </NavLink>
           </li>
+          {(this.state.windowWidth <= 567) && 
+            <li>
+              <LanguageSelect />
+            </li>
+          }
         </ol>
       </Collapse>
       </Wrapper>
