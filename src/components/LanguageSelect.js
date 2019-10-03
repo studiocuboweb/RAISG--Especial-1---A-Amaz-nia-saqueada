@@ -198,13 +198,37 @@ class LanguageSelect extends Component {
       if (this.state.redirect) {
           //console.log('redirect')
           //console.log(this.state.language);
-          var location = "";
+        var location = "";
+
+        var location_2 = document.location.href;
+        var uri = '';
+        if (location_2.search('story') > -1) {
+          uri = '/story';
+          if (location_2.search('mercury') > -1) {
+            uri = '/story/mercury';
+          }
+          if (location_2.search('protected-areas') > -1) {
+            uri = '/story/protected-areas';
+          }
+          if (location_2.search('indigenous-territories') > -1) {
+            uri = '/story/indigenous-territories';
+          }
+          if (location_2.search('conflicts') > -1) {
+            uri = '/story/conflicts';
+          }
+        }
+        if (location_2.search('about') > -1) { 
+          uri = '/about';
+        }
+        if (location_2.search('share') > -1) {
+          uri = '/share';
+        }
         if (this.state.language == 'pt') {
-            location = '?lang=pt';
+            location = 'https://garimpoilegal.amazoniasocioambiental.org'+uri;
         } else if (this.state.language == 'es') {
-            location = '?lang=es';
+            location = 'https://mineriailegal.amazoniasocioambiental.org'+uri;
         } else {
-            location = '?lang=en';
+            location = 'https://illegalmining.amazoniasocioambiental.org'+uri;
         }
         //console.log(location)
         document.location.href = location;
