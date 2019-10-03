@@ -116,7 +116,6 @@ const Wrapper = styled.section`
     }
   }
   #background-video {
-    border:1px solid red;
     position: fixed;
     right: 0;
     bottom: 0;

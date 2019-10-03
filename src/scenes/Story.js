@@ -7,7 +7,6 @@ import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { Redirect, Route, Link, Switch } from "react-router-dom";
 
 import { FormattedMessage } from "react-intl";
-import { CookiesProvider } from 'react-cookie';
 
 import Container from "components/blocks/Container";
 import Paragraph from "components/blocks/Paragraph";
@@ -170,13 +169,11 @@ class Scene extends Component {
           show={this.state.isShowing}
           close={this.closePopupHandler}>
             <FormattedMessage
-              defaultMessage="The data on illegal mining contained in this report represents the time of publication. To view updated data please visit mineria.amazoniasocioambiental.org"
+              defaultMessage="The data on illegal mining contained in this report represents the time of publication. To view updated data please visit {amazoniasocioambiental}"
               id="popup.text"
               values={{
-                a: msg => (
-                  <a class="external_link" target="_blank" href="https://mineria.amazoniasocioambiental.org/">
-                    {msg}
-                  </a>
+                amazoniasocioambiental: (
+                  <a class="external_link" target="_blank" href="https://mineria.amazoniasocioambiental.org/">mineria.amazoniasocioambiental.org</a>
                 ),
               }}
             />
