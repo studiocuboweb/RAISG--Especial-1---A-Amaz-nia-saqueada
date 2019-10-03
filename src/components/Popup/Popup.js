@@ -19,7 +19,7 @@ const popup = (props) => {
                     </h3>
                 </div>
                 <div className="modal-body">
-                    <p>
+                    <p style={{'wordWrap':'break-word'}}>
                         {props.children}
                     </p>
                 </div>
